@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: clang++.exe build active file",
+            "command": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\Llvm\\x64\\bin\\clang++.exe",
+            "args": [
+                "-std=c++17",     // enable C++17
+                "-fcolor-diagnostics",
+                "-fansi-escape-codes",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "Build with clang++"
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: cl.exe build active file",
+            "command": "cl.exe",
+            "args": [
+                "/std:c++17",     // enable C++17
+                "/Zi",
+                "/EHsc",
+                "/nologo",
+                "/Fe${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": ["$msCompile"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build with MSVC cl.exe"
+        }
+    ]
+}

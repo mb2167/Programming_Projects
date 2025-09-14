@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "chrono": "cpp",
+        "filesystem": "cpp",
+        "vector": "cpp"
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
+}
