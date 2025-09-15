@@ -7,13 +7,13 @@
 
 const double G = 6.67430e-11; // gravitational constant
 
+// ----------------- Utility -----------------
 std::string getSourceDir() {
-    std::string path = __FILE__;               // full path of this .cpp file
+    std::string path = __FILE__;
     return std::filesystem::path(path).parent_path().string();
 }
 
-std::ofstream out(getSourceDir() + "/trajectory.csv");
-
+// ----------------- Vector Struct -----------------
 struct Vector3 {
     double x, y, z;
     Vector3 operator+(const Vector3& other) const {
@@ -24,65 +24,97 @@ struct Vector3 {
     }
     Vector3 operator*(double scalar) const {
         return {x * scalar, y * scalar, z * scalar};
-    };
+    }
+    Vector3& operator+=(const Vector3& other) {
+        x += other.x; y += other.y; z += other.z;
+        return *this;
+    }
 };
 
+// ----------------- Body Struct -----------------
 struct Body {
     double mass;
     Vector3 position;
     Vector3 velocity;
 };
 
+// ----------------- Physics -----------------
 Vector3 computeGravitationalForce(const Body& a, const Body& b) {
     Vector3 direction = b.position - a.position;
-    double distance = std::sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
-    if (distance == 0) return {0, 0, 0}; // avoid division by zero
+    double distance = std::sqrt(direction.x * direction.x +
+                                direction.y * direction.y +
+                                direction.z * direction.z);
+    if (distance == 0) return {0, 0, 0};
     double forceMagnitude = (G * a.mass * b.mass) / (distance * distance);
-    return direction * (forceMagnitude / distance); // normalize and scale
-};
+    return direction * (forceMagnitude / distance);
+}
 
+std::vector<Vector3> computeAccelerations(const std::vector<Body>& bodies) {
+    std::vector<Vector3> accelerations(bodies.size(), {0,0,0});
+    for (size_t i = 0; i < bodies.size(); ++i) {
+        for (size_t j = 0; j < bodies.size(); ++j) {
+            if (i != j) {
+                accelerations[i] += computeGravitationalForce(bodies[i], bodies[j]) * (1.0 / bodies[i].mass);
+            }
+        }
+    }
+    return accelerations;
+}
 
+void velocityUpdate(std::vector<Body>& bodies, const std::vector<Vector3>& accelerations, double factor) {
+    for (size_t i = 0; i < bodies.size(); ++i) {
+        bodies[i].velocity = bodies[i].velocity + accelerations[i] * factor;
+    }
+}
 
+void positionUpdate(std::vector<Body>& bodies, double timeStep) {
+    for (auto& body : bodies) {
+        body.position = body.position + body.velocity * timeStep;
+    }
+}
+
+// ----------------- Simulation -----------------
+void simulateStep(std::vector<Body>& bodies, double timeStep, std::ofstream& out, int step) {
+    // 1. Compute accelerations
+    auto accelerations = computeAccelerations(bodies);
+
+    // 2. First half velocity update
+    velocityUpdate(bodies, accelerations, 0.5 * timeStep);
+
+    // 3. Position update
+    positionUpdate(bodies, timeStep);
+
+    // 4. Recompute accelerations
+    accelerations = computeAccelerations(bodies);
+
+    // 5. Second half velocity update
+    velocityUpdate(bodies, accelerations, 0.5 * timeStep);
+
+    // Save positions
+    out << step;
+    for (auto& body : bodies) {
+        out << "," << body.position.x << "," << body.position.y << "," << body.position.z;
+    }
+    out << "\n";
+}
+
+// ----------------- Main -----------------
 int main() {
+    std::ofstream out(getSourceDir() + "/trajectory.csv");
+
     std::vector<Body> bodies = {
-        {1e24, {0, 0, 1e7}, {0, 0, 0}}, // Body 1
-        {1e24, {1e7, 0, 1e7}, {0, 1e3, 0}}, // Body 2
-        {1e24, {0, 1e7, 0}, {-1e3, 0, 0}} // Body 3
+        {1e24, {0, 0, 1e7}, {0, 0, 0}}, 
+        {1e24, {1e7, 0, 1e7}, {0, 1e3, 0}}, 
+        {1e24, {0, 1e7, 0}, {-1e3, 0, 0}}
     };
 
     double timeStep = 1; // seconds
     int steps = 10000;
 
     for (int step = 0; step < steps; ++step) {
-        std::vector<Vector3> forces(bodies.size(), {0, 0, 0});
-
-        // Compute forces
-        for (size_t i = 0; i < bodies.size(); ++i) {
-            for (size_t j = 0; j < bodies.size(); ++j) {
-                if (i != j) {
-                    forces[i] = forces[i] + computeGravitationalForce(bodies[i], bodies[j]);
-                }
-            }
-        }
-
-        // Update velocities and positions
-        for (size_t i = 0; i < bodies.size(); ++i) {
-            Vector3 acceleration = forces[i] * (1.0 / bodies[i].mass);
-            bodies[i].velocity = bodies[i].velocity + acceleration * timeStep;
-            bodies[i].position = bodies[i].position + bodies[i].velocity * timeStep;
-        }
-        out << step;
-        for (auto& body : bodies) {
-            out << "," << body.position.x << "," << body.position.y << "," << body.position.z;
-        }
-        out << "\n";
+        simulateStep(bodies, timeStep, out, step);
     }
+
     out.close();
-
-    // Output final positions
-    for (const auto& body : bodies) {
-        std::cout << "Position: (" << body.position.x << ", " << body.position.y << ", " << body.position.z << ")\n";
-    }
-
     return 0;
-};
+}
