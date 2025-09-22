@@ -1,7 +1,6 @@
 #include "physics.h"
 #include <cmath>
-
-const double G = 6.67430e-11; // gravitational constant
+#include "constants.h"
 
 Vector3 computeGravitationalForce(const Body& a, const Body& b) {
     Vector3 direction = b.position - a.position;
@@ -9,7 +8,7 @@ Vector3 computeGravitationalForce(const Body& a, const Body& b) {
                                 direction.y * direction.y +
                                 direction.z * direction.z);
     if (distance == 0) return {0, 0, 0};
-    double forceMagnitude = (G * a.mass * b.mass) / (distance * distance);
+    double forceMagnitude = (GravitationalConstant * a.mass * b.mass) / (distance * distance);
     return direction * (forceMagnitude / distance);
 }
 
