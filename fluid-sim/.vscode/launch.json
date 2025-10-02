@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run fluid-sim",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/fluid-sim",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "externalConsole": true,
+      "MIMode": "gdb",
+      "preLaunchTask": "cmake build"
+    }
+  ]
+}
