@@ -1,0 +1,3 @@
+C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/quantum_tunnelling.dir
+C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/ZERO_CHECK.dir

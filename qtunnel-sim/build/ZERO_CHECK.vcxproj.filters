@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Michael\VSCodeProjects\qtunnel-sim\build\CMakeFiles\9a6e7d7ee5981be07c1c9fa4e63e30d9\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A98728D4-15CF-3F47-AADD-AECDE92E0369}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

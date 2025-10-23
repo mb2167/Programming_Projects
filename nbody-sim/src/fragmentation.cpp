@@ -37,10 +37,8 @@ double computeGravityResistance(const Body& body) {
 #include <algorithm>
 
 double computeImpactEnergy(const Body& target, const Body& impactor) {
-    // Vector from target to impactor
     Vector3 impactVector = impactor.position - target.position;
 
-    // Relative velocity
     Vector3 relVel = impactor.velocity - target.velocity;
 
     // Project relative velocity onto collision normal (impactVector)
@@ -101,28 +99,148 @@ double computeFragmentationScore(const Body& target, const Body& impactor, doubl
 
 // --- Fragment Generation ---
 
-std::vector<Body> generateFragments(const Body& parent, double fragmentationScore, const Vector3& impactVelocity) {
-    // TODO: create fragments from parent body
-    return {};
-}
-
 std::vector<double> distributeFragmentMasses(double totalFragmentMass) {
-    // TODO: implement power-law fragment mass distribution
-    return {};
+    std::vector<double> fragmentMasses;
+    double remainingMass = totalFragmentMass;
+
+    float fragmentationExponent = 2.5f;                // slope for power-law bias
+    double minFragmentMass = 0.001 * totalFragmentMass; // minimum allowed fragment mass
+
+    std::random_device randomDevice;
+    std::mt19937 randomEngine(randomDevice());
+    std::uniform_real_distribution<double> uniformDistribution(0.0, 1.0);
+
+    while (remainingMass > minFragmentMass) {
+        double randomFraction = uniformDistribution(randomEngine);  
+
+        // Power-law distributed fragment mass
+        double fragmentMass = remainingMass * std::pow(randomFraction, fragmentationExponent);
+
+        // Clamp to [minFragmentMass, remainingMass]
+        fragmentMass = std::clamp(fragmentMass, minFragmentMass, remainingMass);
+
+        fragmentMasses.push_back(fragmentMass);
+        remainingMass -= fragmentMass;
+    }
+
+    // Add leftover as one final fragment
+    if (remainingMass > 0) {
+        fragmentMasses.push_back(remainingMass);
+    }
+
+    return fragmentMasses;
 }
 
 std::vector<Vector3> assignFragmentVelocities(const std::vector<double>& fragmentMasses,
                                               const Vector3& impactVelocity) {
-    // TODO: assign velocities (smaller fragments faster)
-    return {};
+    std::vector<Vector3> fragmentVelocities;
+    fragmentVelocities.reserve(fragmentMasses.size());
+
+    // Compute total fragment mass
+    double totalFragmentMass = 0.0;
+    for (double fragmentMass : fragmentMasses) {
+        totalFragmentMass += fragmentMass;
+    }
+
+    // Parameters
+    double velocityScale = 1.0;   // v0, tunable scaling constant
+    double beta = 1.0 / 3.0;      // typical exponent
+
+    // Random direction generator
+    std::random_device randomDevice;
+    std::mt19937 randomEngine(randomDevice());
+    std::uniform_real_distribution<double> uniformDistribution(0.0, 1.0);
+    std::uniform_real_distribution<double> uniformAngle(0.0, 2.0 * M_PI);
+
+    for (double fragmentMass : fragmentMasses) {
+        // Normalized mass ratio
+        double massRatio = fragmentMass / totalFragmentMass;
+
+        // Velocity magnitude from scaling law
+        double fragmentSpeed = velocityScale * std::pow(massRatio, -beta);
+
+        // Random isotropic direction
+        double z = 2.0 * uniformDistribution(randomEngine) - 1.0;
+        double theta = uniformAngle(randomEngine);
+        double r = std::sqrt(1.0 - z * z);
+
+        Vector3 randomDirection(r * std::cos(theta),
+                                r * std::sin(theta),
+                                z);
+
+        // Final velocity = impact velocity + scaled random component
+        Vector3 fragmentVelocity = impactVelocity + randomDirection * fragmentSpeed;
+
+        fragmentVelocities.push_back(fragmentVelocity);
+    }
+
+    return fragmentVelocities;
 }
 
-void enforceMomentumConservation(std::vector<Body>& fragments, const Vector3& originalMomentum) {
-    // TODO: rescale fragment velocities to conserve momentum
+std::vector<Body> generateFragments(const Body& parent, 
+                                    double fragmentationScore, 
+                                    const Vector3& impactVelocity) {
+    // 1. Decide how much of parent breaks up
+    double totalFragmentMass = parent.mass * fragmentationScore;
+
+    // 2. Distribute that into a mass spectrum
+    auto fragmentMasses = distributeFragmentMasses(totalFragmentMass);
+
+    // 3. Assign velocities using scaling law
+    auto fragmentVelocities = assignFragmentVelocities(fragmentMasses, impactVelocity);
+
+    // 4. Create fragment objects
+    std::vector<Body> fragments;
+    for (size_t i = 0; i < fragmentMasses.size(); ++i) {
+        Body fragment;
+        fragment.mass = fragmentMasses[i];
+        fragment.velocity = fragmentVelocities[i];
+        fragment.position = parent.position;  // start at parent center (could randomize)
+        fragments.push_back(fragment);
+    }
+
+    return fragments;
 }
+
+
+
+void enforceMomentumConservation(std::vector<Body>& fragments,
+                                 const Vector3& parentMomentum) {
+    // Compute current momentum
+    Vector3 fragmentMomentum(0.0, 0.0, 0.0);
+    double totalMass = 0.0;
+
+    for (const auto& frag : fragments) {
+        fragmentMomentum += frag.velocity * frag.mass;
+        totalMass += frag.mass;
+    }
+
+    // Difference in momentum
+    Vector3 momentumError = fragmentMomentum - parentMomentum;
+
+    // Velocity correction to apply to all fragments
+    Vector3 velocityCorrection = momentumError / totalMass;
+
+    for (auto& frag : fragments) {
+        frag.velocity -= velocityCorrection;
+    }
+}
+
 
 void enforceEnergyBudget(std::vector<Body>& fragments, double availableEnergy) {
-    // TODO: rescale velocities to not exceed available kinetic energy
+    // Compute current KE
+    double currentEnergy = 0.0;
+    for (const auto& frag : fragments) {
+        currentEnergy += 0.5 * frag.mass * frag.velocity.lengthSquared();
+    }
+
+    // If too high, rescale velocities
+    if (currentEnergy > availableEnergy && currentEnergy > 0.0) {
+        double scale = std::sqrt(availableEnergy / currentEnergy);
+        for (auto& frag : fragments) {
+            frag.velocity *= scale;
+        }
+    }
 }
 
 // --- Fragment Positioning ---
