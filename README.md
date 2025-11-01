@@ -31,10 +31,12 @@ These projects are driven by curiosity and a passion for learning, providing a s
 ## N-Body Simulation
 
 **Current Progress:**  
-- Implemented a basic N-body simulation with multiple bodies orbiting under mutual gravitational attraction.  
+- Implemented a basic N-body simulation with multiple bodies orbiting under mutual gravitational attraction.
+- Created a fragmentation score system, which determines the amount of mass that fragments upon a collision that is distributed across many different fragment bodies, but it has not been implemented.
 
 **Goals:**  
-- Extend the simulation to handle collisions and merging of bodies.  
+- Extend the simulation to handle collisions and merging of bodies.
+- Expand upon the fragmentation system, adding limits for which the bodies merge and dealing with relatively tiny bodies of mass. 
 - Explore optimisations for larger numbers of bodies and visualisation of complex orbital patterns.  
 
 ---
