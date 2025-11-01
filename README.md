@@ -5,15 +5,18 @@
   <a href="#quantum-tunnelling-simulation">Quantum Tunnelling Simulation</a>
 </p>
 
-## Project Overview
+# Programming Projects  
+Personal programming projects for physics-based simulations
 
-This GitHub hosts a collection of personal projects exploring physics through computational simulations:
+---
+
+## Project Overview  
+This repository hosts a collection of personal projects exploring physics through computational simulation.  
+Each project is driven by curiosity, a passion for learning, and the goal of combining theoretical physics with computational implementation.
 
 - **Fluid Simulation:** Experimenting with the dynamics of liquids and gases using computational fluid dynamics techniques.  
-- **N-Body Simulation:** Simulating gravitational interactions between multiple bodies to observe orbital dynamics and emergent behaviours.  
-- **Quantum Tunnelling Simulation:** Exploring quantum tunnelling, where particles can traverse potential barriers, through numerical simulation and visualisation.
-
-These projects are driven by curiosity and a passion for learning, providing a space to experiment, explore, and share insights in physics and computational modelling.
+- **N-Body Simulation:** Simulating gravitational interactions among multiple bodies to observe orbital dynamics and emergent behaviours.  
+- **Quantum Tunnelling Simulation:** Exploring quantum tunnelling, where particles traverse potential barriers, using numerical simulation and visualisation.
 
 ---
 
@@ -27,11 +30,19 @@ These projects are driven by curiosity and a passion for learning, providing a s
 </p>
 
 **Current Progress:**  
-- Initial planning stage; no substantial implementation yet.  
+- Initial planning stage; core algorithms not yet implemented.
 
 **Goals:**  
-- Develop a basic fluid simulation capturing fundamental fluid dynamics such as flow, diffusion, and simple interactions.  
-- Explore numerical methods like grid-based solvers or particle-based techniques to model fluids realistically.  
+- Develop a basic fluid simulation capturing fundamental fluid dynamics: flow, diffusion, and simple interactions.  
+- Explore numerical methods — grid-based solvers or particle-based techniques — to model fluids realistically.  
+- Include visualisation to demonstrate simulation results.
+
+**Technical Stack:**  
+- **Languages:** C++, Python  
+- **Libraries / Tools:** VSCode, NumPy, SciPy, Matplotlib, Jupyter Notebook  
+- **Techniques:** Grid-based or particle-based solvers, numerical methods for advection and diffusion, visualisation of fluid dynamics  
+
+**Status:** WIP  
 
 ---
 
@@ -45,13 +56,20 @@ These projects are driven by curiosity and a passion for learning, providing a s
 </p>
 
 **Current Progress:**  
-- Implemented a basic N-body simulation with multiple bodies orbiting under mutual gravitational attraction.  
-- Created a fragmentation score system, which determines the amount of mass that fragments upon a collision; this system has not yet been implemented.  
+- Implemented a basic N-body simulation where multiple bodies orbit under mutual gravitational attraction.  
+- Designed a fragmentation-score system, determining how much mass fragments upon collisions; integration pending.
 
 **Goals:**  
-- Extend the simulation to handle collisions and merging of bodies.  
-- Expand upon the fragmentation system, adding limits for which bodies merge and handling relatively small-mass bodies.  
-- Explore optimisations for larger numbers of bodies and visualisation of complex orbital patterns.  
+- Extend simulation to handle collisions and merging of bodies.  
+- Expand the fragmentation system to define merge thresholds and manage small-mass bodies effectively.  
+- Optimise for larger numbers of bodies and visualise complex orbital patterns.
+
+**Technical Stack:**  
+- **Languages:** C++, Python  
+- **Libraries / Tools:** VSCode, NumPy, Matplotlib, Jupyter Notebook  
+- **Techniques:** Newtonian gravity, numerical integration, collision detection, fragmentation scoring system, visualisation of orbits, performance optimisation for multi-body systems  
+
+**Status:** Prototype  
 
 ---
 
@@ -65,9 +83,35 @@ These projects are driven by curiosity and a passion for learning, providing a s
 </p>
 
 **Current Progress:**  
-- Conceptual planning stage; no significant code implementation yet.  
+- Conceptual planning stage; no substantial coding yet.
 
 **Goals:**  
-- Develop simulations for arbitrary potential barriers.  
-- Accurately model particle behaviour using quantum mechanics principles and numerical methods such as the finite difference method.  
+- Develop a simulation for arbitrary potential barriers.  
+- Accurately model particle behaviour using quantum mechanics principles and numerical methods (e.g., finite difference method).  
 - Visualise tunnelling probabilities and wavefunction dynamics.
+
+**Technical Stack:**  
+- **Languages:** C++, Python  
+- **Libraries / Tools:** VSCode, NumPy, SciPy, Matplotlib, Jupyter Notebook  
+- **Techniques:** Finite difference methods for solving the Schrödinger equation, arbitrary potential barrier simulation, wavefunction visualisation, calculation of tunnelling probabilities  
+
+**Status:** Concept  
+
+---
+
+## Highlights & Achievements  
+- Developed a working simulation of multi-body orbital mechanics.  
+- Designed fragmentation scoring logic for future collision handling.  
+- Structured repository for modular growth into three simulation domains.  
+- Practising numerical methods and visualisation techniques in physics simulations.
+
+---
+
+## Learning Outcomes  
+Through these projects, I am gaining:  
+- Practical experience in implementing numerical methods for physics (e.g., solvers, integrators).  
+- Skills in visualising complex systems and results (Matplotlib, animation).  
+- Deeper understanding of physical concepts: fluid dynamics, celestial mechanics, quantum phenomena.  
+- Code organisation and design for scalability across simulation types.
+
+---
