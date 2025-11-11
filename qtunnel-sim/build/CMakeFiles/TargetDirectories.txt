@@ -1,3 +1,0 @@
-C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/quantum_tunnelling.dir
-C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/edit_cache.dir
-C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/rebuild_cache.dir
