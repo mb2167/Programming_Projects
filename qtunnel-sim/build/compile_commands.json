@@ -1,0 +1,38 @@
+[
+{
+  "directory": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\Llvm\\bin\\clang.exe -IC:/Users/Michael/VSCodeProjects/qtunnel-sim/include -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++17 -Wall -Wextra -O2 -o CMakeFiles\\quantum_tunnelling.dir\\src\\Grid.cpp.obj -c C:\\Users\\Michael\\VSCodeProjects\\qtunnel-sim\\src\\Grid.cpp",
+  "file": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/src/Grid.cpp",
+  "output": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/quantum_tunnelling.dir/src/Grid.cpp.obj"
+},
+{
+  "directory": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\Llvm\\bin\\clang.exe -IC:/Users/Michael/VSCodeProjects/qtunnel-sim/include -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++17 -Wall -Wextra -O2 -o CMakeFiles\\quantum_tunnelling.dir\\src\\PotentialBarrier.cpp.obj -c C:\\Users\\Michael\\VSCodeProjects\\qtunnel-sim\\src\\PotentialBarrier.cpp",
+  "file": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/src/PotentialBarrier.cpp",
+  "output": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/quantum_tunnelling.dir/src/PotentialBarrier.cpp.obj"
+},
+{
+  "directory": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\Llvm\\bin\\clang.exe -IC:/Users/Michael/VSCodeProjects/qtunnel-sim/include -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++17 -Wall -Wextra -O2 -o CMakeFiles\\quantum_tunnelling.dir\\src\\Solver.cpp.obj -c C:\\Users\\Michael\\VSCodeProjects\\qtunnel-sim\\src\\Solver.cpp",
+  "file": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/src/Solver.cpp",
+  "output": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/quantum_tunnelling.dir/src/Solver.cpp.obj"
+},
+{
+  "directory": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\Llvm\\bin\\clang.exe -IC:/Users/Michael/VSCodeProjects/qtunnel-sim/include -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++17 -Wall -Wextra -O2 -o CMakeFiles\\quantum_tunnelling.dir\\src\\Utils.cpp.obj -c C:\\Users\\Michael\\VSCodeProjects\\qtunnel-sim\\src\\Utils.cpp",
+  "file": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/src/Utils.cpp",
+  "output": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/quantum_tunnelling.dir/src/Utils.cpp.obj"
+},
+{
+  "directory": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\Llvm\\bin\\clang.exe -IC:/Users/Michael/VSCodeProjects/qtunnel-sim/include -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++17 -Wall -Wextra -O2 -o CMakeFiles\\quantum_tunnelling.dir\\src\\Wavefunction.cpp.obj -c C:\\Users\\Michael\\VSCodeProjects\\qtunnel-sim\\src\\Wavefunction.cpp",
+  "file": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/src/Wavefunction.cpp",
+  "output": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/quantum_tunnelling.dir/src/Wavefunction.cpp.obj"
+},
+{
+  "directory": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build",
+  "command": "C:\\PROGRA~1\\MICROS~2\\2022\\COMMUN~1\\VC\\Tools\\Llvm\\bin\\clang.exe -IC:/Users/Michael/VSCodeProjects/qtunnel-sim/include -O0 -g -Xclang -gcodeview -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -std=gnu++17 -Wall -Wextra -O2 -o CMakeFiles\\quantum_tunnelling.dir\\src\\main.cpp.obj -c C:\\Users\\Michael\\VSCodeProjects\\qtunnel-sim\\src\\main.cpp",
+  "file": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/src/main.cpp",
+  "output": "C:/Users/Michael/VSCodeProjects/qtunnel-sim/build/CMakeFiles/quantum_tunnelling.dir/src/main.cpp.obj"
+}
+]
