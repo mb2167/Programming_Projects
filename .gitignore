@@ -1,1 +1,5 @@
 nbody-sim/build/
+nbody-sim/output/
+qtunnel-sim/additional_libraries/
+qtunnel-sim/build/
+letterboxd-watchlist-comparison/build/

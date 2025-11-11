@@ -1,0 +1,23 @@
+{
+  "user_groups": [
+    ["username1", "username2"],
+    ["username3", "username4"],
+    ["username5", "username6", "username7"]
+  ],
+  "user_map": {
+    "username1": "Name1",
+    "username2": "Name2",
+    "username3": "Name3",
+    "username4": "Name4",
+    "username5": "Name5",
+    "username6": "Name6",
+    "username7": "Name7"
+  },
+  "output_dir": "letterboxd_watchlists",
+  "combined_filename": "combined_watchlist.csv",
+  "tmdb_api_key": "YOUR_API_KEY_HERE",
+  "country": "GB",
+  "films_per_page": 28,
+  "request_delay": 0.4,
+  "rate_limit_delay": 0.2
+}

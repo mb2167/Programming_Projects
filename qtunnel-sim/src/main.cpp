@@ -1,73 +1,60 @@
 #include "Grid.hpp"
 #include "Wavefunction.hpp"
 #include "Solver.hpp"
-#include "PotentialBarrier.hpp"
 #include "Utils.hpp"
+#include "PotentialBarrier.hpp"
 
 #include <filesystem>
 #include <iostream>
 #include <string>
 
-// ---------- Simulation parameters ----------
-constexpr int NX = 128;            // Number of grid points in x
-constexpr int NY = 128;            // Number of grid points in y
-constexpr double X_MAX = 40.0;     // Max x-coordinate
-constexpr double Y_MAX = 40.0;     // Max y-coordinate
+constexpr int NX = 128;
+constexpr int NY = 128;
+constexpr double X_MAX = 40.0;
+constexpr double Y_MAX = 40.0;
 
-constexpr double POTENTIAL_HEIGHT = 8.0;   // V0 for Gaussian barrier
-constexpr double BARRIER_X_CENTER = 0.0;   // x-center of barrier
-constexpr double BARRIER_Y_CENTER = 0.0;   // y-center of barrier
-constexpr double BARRIER_SIGMA_X = 2.0;    // width of barrier in x
-constexpr double BARRIER_SIGMA_Y = 1e6;    // width of barrier in y
+constexpr double POTENTIAL_HEIGHT = 8.0;
+constexpr double BARRIER_X_CENTER = 0.0;
+constexpr double BARRIER_Y_CENTER = 0.0;
+constexpr double BARRIER_SIGMA_X = 2.0;
+constexpr double BARRIER_SIGMA_Y = 1e6;
 
-constexpr double WAVE_X0 = -10.0;          // initial wavefunction x-position
-constexpr double WAVE_Y0 = 0.0;            // initial wavefunction y-position
-constexpr double WAVE_SIGMA_X = 2.0;       // width of initial wavefunction in x
-constexpr double WAVE_SIGMA_Y = 2.5;       // width of initial wavefunction in y
-constexpr double WAVE_KX0 = 0.0;           // initial momentum (or phase) along x
+constexpr double WAVE_X0 = -10.0;
+constexpr double WAVE_Y0 = 0.0;
+constexpr double WAVE_SIGMA_X = 2.0;
+constexpr double WAVE_SIGMA_Y = 2.5;
+constexpr double WAVE_KX0 = 50.0;
 
-constexpr double TIME_STEP = 0.005;        // solver time step
-constexpr int NUM_STEPS = 100;             // total simulation steps
+constexpr double TIME_STEP = 0.005;
+constexpr int NUM_STEPS = 100;  // just 10 steps for testing
 
-constexpr const char* DATA_FOLDER = "wave_data";  // folder to save wavefunction CSVs
+constexpr const char* DATA_FOLDER = "wave_data";
 
-// ---------- Main program ----------
 int main() {
-    // Create folder for wavefunction data
     std::filesystem::create_directory(DATA_FOLDER);
 
-    // Create grid
+    // Grid
     Grid grid(NX, NY, X_MAX, Y_MAX);
 
-    // Choose potential
-    GaussianBarrier barrier(POTENTIAL_HEIGHT,
-                            BARRIER_X_CENTER,
-                            BARRIER_Y_CENTER,
-                            BARRIER_SIGMA_X,
-                            BARRIER_SIGMA_Y);
+    // Potential
+    GaussianBarrier barrier(POTENTIAL_HEIGHT, BARRIER_X_CENTER, BARRIER_Y_CENTER,
+                            BARRIER_SIGMA_X, BARRIER_SIGMA_Y);
     auto Vmap = barrier.compute(grid);
+    save2DRealArray(std::string(DATA_FOLDER)+"/potential.csv", Vmap, NX, NY);
 
-    // Save potential in the same folder
-    save2DRealArray(std::string(DATA_FOLDER) + "/potential.csv", Vmap, grid.Nx, grid.Ny);
+    // Wavefunction
+    Wavefunction psi(NX, NY);
+    psi.initializeGaussian(grid, WAVE_X0, WAVE_Y0, WAVE_SIGMA_X, WAVE_SIGMA_Y, WAVE_KX0, 0.0);
+    saveWavefunctionMagnitude(std::string(DATA_FOLDER)+"/wave_0.csv", psi.psi, NX, NY);
 
-    // Initialize wavefunction
-    Wavefunction psi(grid.Nx, grid.Ny);
-    psi.initializeGaussian(grid,
-                           WAVE_X0, WAVE_Y0,
-                           WAVE_SIGMA_X, WAVE_SIGMA_Y,
-                           WAVE_KX0);
+    // Solver
+    Solver solver(TIME_STEP, 1.0, 1.0);  // hbar=1, mass=1
 
-    saveWavefunctionMagnitude(std::string(DATA_FOLDER) + "/wave_0.csv", psi.psi, grid.Nx, grid.Ny);
-
-    // Time evolution
-    Solver solver(TIME_STEP);
     for (int step = 1; step <= NUM_STEPS; ++step) {
-        solver.propagateStep(psi, Vmap);
-        std::cout << "Step " << step << " complete.\n";
-
-        // Save wavefunction for this timestep
+        solver.propagateStep(psi, Vmap, grid);
         std::string filename = std::string(DATA_FOLDER) + "/wave_" + std::to_string(step) + ".csv";
-        saveWavefunctionMagnitude(filename, psi.psi, grid.Nx, grid.Ny);
+        saveWavefunctionMagnitude(filename, psi.psi, NX, NY);
+        std::cout << "Step " << step << " complete.\n";
     }
 
     std::cout << "Simulation finished.\n";
