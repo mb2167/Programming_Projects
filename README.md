@@ -11,7 +11,7 @@ Personal programming projects for physics-based simulations and additional tools
 ---
 
 ## Project Overview  
-This repository hosts a collection of personal projects exploring physics through computational simulation and other supporting programming tools.  
+This repository hosts a collection of personal projects that explore physics through computational simulations and other supporting programming tools.  
 Each project is driven by curiosity, a passion for learning, and the goal of combining theoretical physics with computational implementation.
 
 - **High-Performance Circle Packing:** A study on packing fractions using Serial and MPI (Distributed Memory) parallelisation.
@@ -40,7 +40,7 @@ A computational physics project designed to calculate the "Packing Fraction" of 
 
 **Technical Stack:** - **Languages:** C++, Python  
 - **Parallel Computing:** MPI (Message Passing Interface), OpenMP  
-- **Libraries / Tools:** Jupyter Notebook, Matplotlib, HPC Cluster Environments (ARCHER2)  
+- **Libraries / Tools:** Jupyter Notebook, Matplotlib, HPC Cluster Environments (University of York's Viking 2) 
 
 **Status:** Completed (Scientific Supercomputing Portfolio)  
 
