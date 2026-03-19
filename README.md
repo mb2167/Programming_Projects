@@ -89,6 +89,5 @@ Across these projects:
 - Applying numerical physics techniques to real computational simulations.  
 - Building interfaces and visualisations for scientific or media data.  
 - Improving software design practices and modular organisation.  
-- Exploring interdisciplinary topics from astrophysics to quantum mechanics.
 
 ---
