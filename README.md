@@ -1,8 +1,6 @@
 <p align="center">
   <a href="#project-overview">Project Overview</a> •
-  <a href="#fluid-simulation">Fluid Simulation</a> •
   <a href="#n-body-simulation">N-Body Simulation</a> •
-  <a href="#quantum-tunnelling-simulation">Quantum Tunnelling Simulation</a> •
   <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Watchlist Comparison Tool</a>
 </p>
 
@@ -22,39 +20,11 @@ Each project is driven by curiosity, a passion for learning, and the goal of com
 
 ---
 
-## Fluid Simulation
-
-<p align="center">
-  <a href="#project-overview">Project Overview</a> •
-  <a href="#fluid-simulation">Fluid Simulation</a> •
-  <a href="#n-body-simulation">N-Body Simulation</a> •
-  <a href="#quantum-tunnelling-simulation">Quantum Tunnelling Simulation</a> •
-  <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Tool</a>
-</p>
-
-**Current Progress:**  
-- Initial planning stage; core algorithms not yet implemented.
-
-**Goals:**  
-- Develop a basic fluid simulation capturing fundamental fluid dynamics: flow, diffusion, and simple interactions.  
-- Explore grid-based or particle-based methods for realistic behaviour.  
-- Visualise generated results clearly.
-
-**Technical Stack:**  
-- **Languages:** C++, Python  
-- **Libraries / Tools:** VSCode, NumPy, SciPy, Matplotlib, Jupyter Notebook  
-
-**Status:** Work in progress  
-
----
-
 ## N-Body Simulation
 
 <p align="center">
   <a href="#project-overview">Project Overview</a> •
-  <a href="#fluid-simulation">Fluid Simulation</a> •
   <a href="#n-body-simulation">N-Body Simulation</a> •
-  <a href="#quantum-tunnelling-simulation">Quantum Tunnelling Simulation</a> •
   <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Tool</a>
 </p>
 
@@ -75,39 +45,11 @@ Each project is driven by curiosity, a passion for learning, and the goal of com
 
 ---
 
-## Quantum Tunnelling Simulation
-
-<p align="center">
-  <a href="#project-overview">Project Overview</a> •
-  <a href="#fluid-simulation">Fluid Simulation</a> •
-  <a href="#n-body-simulation">N-Body Simulation</a> •
-  <a href="#quantum-tunnelling-simulation">Quantum Tunnelling Simulation</a> •
-  <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Tool</a>
-</p>
-
-**Current Progress:**  
-- Conceptual planning stage; implementation pending.
-
-**Goals:**  
-- Simulate wavefunction evolution through arbitrary potential barriers.  
-- Use numerical solutions to the Schrödinger equation.  
-- Visualise tunnelling behaviour and probabilities.
-
-**Technical Stack:**  
-- **Languages:** C++, Python  
-- **Libraries / Tools:** VSCode, NumPy, SciPy, Matplotlib, Jupyter Notebook  
-
-**Status:** Concept  
-
----
-
 ## Letterboxd Watchlist Comparison Tool
 
 <p align="center">
   <a href="#project-overview">Project Overview</a> •
-  <a href="#fluid-simulation">Fluid Simulation</a> •
   <a href="#n-body-simulation">N-Body Simulation</a> •
-  <a href="#quantum-tunnelling-simulation">Quantum Tunnelling Simulation</a> •
   <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Tool</a>
 </p>
 
