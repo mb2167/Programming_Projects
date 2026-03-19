@@ -68,13 +68,24 @@ int main() {
     vtimer_t timer;
     timer.start();
     //Variable initialisation
+
+    int maxNoChangeTrials;
+    std::cout << "================================================" << std::endl;
+    std::cout << "Hard Sphere Packing Fraction Simulation" << std::endl;
+    std::cout << "Enter max trials without change (e.g., 10000): ";
+    std::cin >> maxNoChangeTrials;
+    
+    if (maxNoChangeTrials <= 0) {
+        std::cerr << "Error: Trials must be a positive integer." << std::endl;
+        return 1;
+    }
+    
     const double box_length = 200.0;
     const double circ_radius = 1.234;
     double previous_PF = 0.0;
     double current_PF = 0.0;
     int trial = 0;
     int noChangeCount = 0;                              //Count how many trials there are without a change in the packing fraction
-    const int maxNoChangeTrials = 100000;               // Maximum number of trials for the packing fraction to not change
     std::vector<Circle> circles;                        //Array to hold all the valid circles
     rng randomGenerator;                                //Create an instance of the rng class
 
