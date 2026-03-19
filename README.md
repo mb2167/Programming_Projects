@@ -35,7 +35,7 @@ A computational physics project designed to calculate the "Packing Fraction" of 
 
 **Key Features:** - **Serial Baseline:** Implementation of a hard-sphere packing algorithm with custom Mersenne Twister RNG and high-resolution timing.
 - **MPI Parallelisation:** A distributed memory version that partitions the domain and handles boundary synchronisation between processes.
-- **Scalability Analysis:** Evaluated on the **ARCHER2** and **Bede** supercomputers to analyse performance scaling across multiple MPI tasks.
+- **Scalability Analysis:** Evaluated on the **Viking2** supercomputer to analyse performance scaling across multiple MPI tasks.
 - **Data Visualisation:** A Jupyter Notebook pipeline to visualise the final packing distribution and process boundaries.
 
 **Technical Stack:** - **Languages:** C++, Python  
