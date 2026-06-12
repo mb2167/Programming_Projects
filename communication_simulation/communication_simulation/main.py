@@ -17,8 +17,7 @@ def bit_to_signal(bits):
 # ------------------------------ TRANSMISSION ------------------------------ 
 
 # Add noise to the signal
-def add_noise(signal):
-    snr_db = 1
+def add_noise(signal, snr_db):
     P_signal = np.mean((signal*signal))
     snr_linear = 10 ** (snr_db / 10)
     P_noise = P_signal / snr_linear
@@ -46,22 +45,44 @@ def plot_signal(signal):
     plt.axhline(linestyle = "--", color = "red")
     plt.show()
 
+# Plot SNR against BER
+def plot_snr_v_ber(snr, ber):
+    plt.xlabel("SNR")
+    plt.ylabel("BER (%)")
+    plt.plot(snr,ber)
+    plt.show()
+
+
 # ------------------------------ MAIN ------------------------------
 
-def main():
-    size = 10000
-    seed = 1 # Seed for randomness
-    
+def communication_simulation(seed,size,snr_dB):
     random_bits = gen_bits(seed, size)
     signal = bit_to_signal(random_bits)
-    noisy_signal = add_noise(signal)
-    plot_signal(noisy_signal)
+    noisy_signal = add_noise(signal, snr_dB)
 
     received_bits = signal_to_bit(noisy_signal)
 
     error = calc_error(random_bits,received_bits)
+    return error
 
-    print("Error:", error*100,"%")
+
+
+def main():
+    size = 10000
+    seed = 1 # Seed for randomness
+
+    snr_list = []
+    ber_list = []
+
+    for i in range(60):
+        snr_dB = i-40
+        snr_list.append(snr_dB)
+        ber_list.append(communication_simulation(seed, size, snr_dB))
+    
+    ber_list = np.array(ber_list) * 100
+    plot_snr_v_ber(snr_list,ber_list)
+
+
 
 if __name__ == "__main__":
     main()
