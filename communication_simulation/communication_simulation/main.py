@@ -35,6 +35,7 @@ def calc_error(sent_bits, received_bits):
     error = np.not_equal(sent_bits, received_bits)
     return error.sum()/np.size(sent_bits)
 
+
 # ------------------------------ UTILITIES / DEBUGGING ------------------------------
 
 # Visualise the noisy signal
@@ -48,8 +49,9 @@ def plot_signal(signal):
 # Plot SNR against BER
 def plot_snr_v_ber(snr, ber):
     plt.xlabel("SNR")
-    plt.ylabel("BER (%)")
+    plt.ylabel("log(BER)")
     plt.plot(snr,ber)
+    plt.grid()
     plt.show()
 
 
@@ -66,22 +68,20 @@ def communication_simulation(seed,size,snr_dB):
     return error
 
 
-
 def main():
-    size = 10000
+    size = 100000
     seed = 1 # Seed for randomness
 
     snr_list = []
     ber_list = []
 
     for i in range(60):
-        snr_dB = i-40
+        snr_dB = i-30
         snr_list.append(snr_dB)
         ber_list.append(communication_simulation(seed, size, snr_dB))
     
-    ber_list = np.array(ber_list) * 100
+    ber_list = np.log(ber_list)
     plot_snr_v_ber(snr_list,ber_list)
-
 
 
 if __name__ == "__main__":
