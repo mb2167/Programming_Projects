@@ -1,87 +1,26 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
-# ------------------------------ PRE-TRANSMISSION SETUP ------------------------------
-
-# Generate the bits to be processed
-def gen_bits(seed, size):
-    # Random bit generation
-    rng = np.random.default_rng(seed)
-    return rng.integers(0, 2, size=size)
-
-# Convert the bits into a wave signal
-def bit_to_signal(bits):
-    return (bits * 2) - 1
-
-
-# ------------------------------ TRANSMISSION ------------------------------ 
-
-# Add noise to the signal
-def add_noise(signal, snr_db):
-    P_signal = np.mean((signal*signal))
-    snr_linear = 10 ** (snr_db / 10)
-    P_noise = P_signal / snr_linear
-    noise_std = np.sqrt(P_noise)
-    return signal + np.random.normal(0, noise_std, np.size(signal))
-
-
-# ------------------------------ POST-TRANSMISSION PROCESSING ------------------------------ 
-# Convert the signal to bits
-def signal_to_bit(signal):
-    return np.where(signal < 0, 0, 1) # If array value < 0, return 0, otherwise 1
-    
-# Calculate the error between the input bits and output bits
-def calc_error(sent_bits, received_bits):
-    error = np.not_equal(sent_bits, received_bits)
-    return error.sum()/np.size(sent_bits)
-
-
-# ------------------------------ UTILITIES / DEBUGGING ------------------------------
-
-# Visualise the noisy signal
-def plot_signal(signal):
-    plt.plot(signal)
-    plt.ylim(-3,3)
-    plt.xlim(0, np.size(signal))
-    plt.axhline(linestyle = "--", color = "red")
-    plt.show()
-
-# Plot SNR against BER
-def plot_snr_v_ber(snr, ber):
-    plt.xlabel("SNR")
-    plt.ylabel("log(BER)")
-    plt.plot(snr,ber)
-    plt.grid()
-    plt.show()
+from simulation import communication_simulation
+from plotting import plot_snr_v_ber
 
 
 # ------------------------------ MAIN ------------------------------
 
-def communication_simulation(seed,size,snr_dB):
-    random_bits = gen_bits(seed, size)
-    signal = bit_to_signal(random_bits)
-    noisy_signal = add_noise(signal, snr_dB)
-
-    received_bits = signal_to_bit(noisy_signal)
-
-    error = calc_error(random_bits,received_bits)
-    return error
-
-
 def main():
-    size = 100000
-    seed = 1 # Seed for randomness
+    size = 1000000
+    seed = 2
+
+    # Instantiate the RNG once here to avoid repeating bit sequences
+    rng = np.random.default_rng(seed)
 
     snr_list = []
     ber_list = []
 
-    for i in range(60):
-        snr_dB = i-30
+    for snr_dB in range(-10, 13):
         snr_list.append(snr_dB)
-        ber_list.append(communication_simulation(seed, size, snr_dB))
-    
-    ber_list = np.log(ber_list)
-    plot_snr_v_ber(snr_list,ber_list)
+        ber_list.append(communication_simulation(rng, size, snr_dB))
+
+    plot_snr_v_ber(snr_list, ber_list)
 
 
 if __name__ == "__main__":
