@@ -13,7 +13,7 @@ A collection of personal projects exploring computational physics simulations, h
 ## 🛠️ Featured Projects
 
 ### High-Performance Circle Packing (HPC)
-📂 [View Code](./circle-packing)
+📂 [View Code](./monte_carlo_packing_fraction_simulation)
 
 A computational physics project designed to calculate the packing fraction of hard circles in a 2D domain, transitioning from a serial baseline to high-performance parallel computing.
 
@@ -27,7 +27,7 @@ A computational physics project designed to calculate the packing fraction of ha
 ---
 
 ### Digital Communications Simulator (DSP)
-📂 [View Code](./telecom-sim)
+📂 [View Code](./communication_simulation)
 
 A discrete-time software radio simulator that models data transmission over a noisy channel, demonstrating the physics of wave modulation, pulse shaping, and signal recovery.
 
@@ -41,7 +41,7 @@ A discrete-time software radio simulator that models data transmission over a no
 ---
 
 ### N-Body Simulation
-📂 [View Code](./n-body)
+📂 [View Code](./nbody-sim)
 
 A physics simulation tracking gravitational interactions, orbital mechanics, and multi-body dynamics.
 
@@ -55,7 +55,7 @@ A physics simulation tracking gravitational interactions, orbital mechanics, and
 ---
 
 ### Letterboxd Watchlist Comparison Tool
-📂 [View Code](./letterboxd-tool)
+📂 [View Code](./letterboxd-watchlist-comparison)
 
 A desktop application designed to scrape and cross-reference multiple Letterboxd user watchlists to find shared film interests.
 
