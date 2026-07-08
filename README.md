@@ -15,9 +15,7 @@ This repository hosts a collection of personal projects that explore physics thr
 Each project is driven by curiosity, a passion for learning, and the goal of combining theoretical physics with computational implementation.
 
 - **High-Performance Circle Packing:** A study on packing fractions using Serial and MPI (Distributed Memory) parallelisation.
-- **Fluid Simulation:** Exploring fluid dynamics through computational models.  
 - **N-Body Simulation:** Simulating gravitational interactions and orbital mechanics.  
-- **Quantum Tunnelling Simulation:** Investigating quantum wavefunction behaviour through numerical methods.  
 - **Letterboxd Watchlist Comparison Tool:** A standalone application for analysing shared film interests.
 
 ---
