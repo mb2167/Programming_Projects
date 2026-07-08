@@ -1,24 +1,27 @@
+# main.py
 import numpy as np
 
+from config import SimConfig
 from simulation import communication_simulation
-from plotting import plot_snr_v_ber
+from plotting import plot_snr_v_ber, plot_signal
 
 
 # ------------------------------ MAIN ------------------------------
 
 def main():
-    size = 1000000
-    seed = 2
+    # Load configuration
+    cfg = SimConfig()
 
-    # Instantiate the RNG once here to avoid repeating bit sequences
-    rng = np.random.default_rng(seed)
-
+    # Instantiate the RNG once here using the config seed
+    rng = np.random.default_rng(cfg.SEED)
+    
     snr_list = []
     ber_list = []
 
-    for snr_dB in range(-10, 13):
+    # Iterate through the SNR range defined in config
+    for snr_dB in cfg.snr_range:
         snr_list.append(snr_dB)
-        ber_list.append(communication_simulation(rng, size, snr_dB))
+        ber_list.append(communication_simulation(rng, cfg.SIZE, snr_dB, cfg.ALPHA, cfg.SPS, cfg.FILTER_LENGTH))
 
     plot_snr_v_ber(snr_list, ber_list)
 

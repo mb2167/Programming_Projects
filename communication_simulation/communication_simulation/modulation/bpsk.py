@@ -1,19 +1,16 @@
+# modulation/bpsk.py
 import numpy as np
 
 # ------------------------------ PRE-TRANSMISSION SETUP ------------------------------
 
-# Generate the bits to be processed using a shared RNG instance
-def gen_bits(rng, size):
-    return rng.integers(0, 2, size=size)
-
-
 # Convert the bits into a BPSK signal
-def bit_to_signal(bits):
-    return (bits * 2) - 1
+def modulate(bit_array: np.ndarray):
+    symbols = (bit_array * 2) - 1
+    return symbols
 
 
 # ------------------------------ POST-TRANSMISSION PROCESSING ------------------------------
 
 # Convert the signal back to bits
-def signal_to_bit(signal):
+def demodulate(signal: np.ndarray):
     return np.where(signal < 0, 0, 1)
