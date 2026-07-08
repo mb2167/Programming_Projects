@@ -1,115 +1,77 @@
-<p align="center">
-  <a href="#project-overview">Project Overview</a> •
-  <a href="#high-performance-circle-packing-hpc">Circle Packing (HPC)</a> •
-  <a href="#n-body-simulation">N-Body Simulation</a> •
-  <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Tool</a>
-</p>
-
 # Programming Projects  
-Personal programming projects for physics-based simulations and additional tools.
+A collection of personal projects exploring computational physics simulations, high-performance computing, and digital signal processing.
 
----
-
-## Project Overview  
-This repository hosts a collection of personal projects that explore physics through computational simulations and other supporting programming tools.  
-Each project is driven by curiosity, a passion for learning, and the goal of combining theoretical physics with computational implementation.
-
-- **High-Performance Circle Packing:** A study on packing fractions using Serial and MPI (Distributed Memory) parallelisation.
-- **N-Body Simulation:** Simulating gravitational interactions and orbital mechanics.  
-- **Letterboxd Watchlist Comparison Tool:** A standalone application for analysing shared film interests.
-
----
-
-## High-Performance Circle Packing (HPC)
-
-<p align="center">
-  <a href="#project-overview">Project Overview</a> •
+<p align="left">
   <a href="#high-performance-circle-packing-hpc">Circle Packing (HPC)</a> •
+  <a href="#digital-communications-simulator-dsp">Digital Communications Simulator</a> •
   <a href="#n-body-simulation">N-Body Simulation</a> •
   <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Tool</a>
 </p>
 
-A computational physics project designed to calculate the "Packing Fraction" of hard circles in a 2D domain. This project focuses on the transition from serial algorithms to high-performance parallel computing.
+---
 
-**Key Features:** - **Serial Baseline:** Implementation of a hard-sphere packing algorithm with custom Mersenne Twister RNG and high-resolution timing.
-- **MPI Parallelisation:** A distributed memory version that partitions the domain and handles boundary synchronisation between processes.
-- **Scalability Analysis:** Evaluated on the **Viking2** supercomputer to analyse performance scaling across multiple MPI tasks.
-- **Data Visualisation:** A Jupyter Notebook pipeline to visualise the final packing distribution and process boundaries.
+## 🛠️ Featured Projects
 
-**Technical Stack:** - **Languages:** C++, Python  
-- **Parallel Computing:** MPI (Message Passing Interface), OpenMP  
-- **Libraries / Tools:** Jupyter Notebook, Matplotlib, HPC Cluster Environments (University of York's Viking 2) 
+### High-Performance Circle Packing (HPC)
+📂 [View Code](./circle-packing)
 
-**Status:** Completed (Scientific Supercomputing Portfolio)  
+A computational physics project designed to calculate the packing fraction of hard circles in a 2D domain, transitioning from a serial baseline to high-performance parallel computing.
+
+* **Key Features:**
+  * **Parallel Scale:** Implemented a distributed memory version using MPI that partitions the 2D domain and handles boundary synchronization between processes.
+  * **Performance Benchmarking:** Evaluated scalability on the University of York's **Viking2** supercomputer to analyze performance scaling across multiple MPI tasks.
+  * **Data Pipeline:** Utilizes a custom Mersenne Twister RNG in C++ coupled with a Jupyter Notebook pipeline to visualize the final packing distribution and process boundaries.
+* **Tech Stack:** C++, MPI, OpenMP, Python, Jupyter Notebook, Matplotlib
+* **Status:** Completed (Scientific Supercomputing Portfolio)
 
 ---
 
-## N-Body Simulation
+### Digital Communications Simulator (DSP)
+📂 [View Code](./telecom-sim)
 
-<p align="center">
-  <a href="#project-overview">Project Overview</a> •
-  <a href="#high-performance-circle-packing-hpc">Circle Packing (HPC)</a> •
-  <a href="#n-body-simulation">N-Body Simulation</a> •
-  <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Tool</a>
-</p>
+A discrete-time software radio simulator that models data transmission over a noisy channel, demonstrating the physics of wave modulation, pulse shaping, and signal recovery.
 
-**Current Progress:** - Basic gravitational orbit simulation implemented.  
-- Fragmentation scoring designed for future collision modelling.
-
-**Goals:** - Add collision and merging logic.  
-- Improve performance for large system sizes.  
-- Provide richer visualisation of orbital behaviour.
-
-**Technical Stack:** - **Languages:** C++, Python  
-- **Libraries / Tools:** VSCode, NumPy, Matplotlib, Jupyter Notebook  
-
-**Status:** Prototype  
+* **Key Features:**
+  * **End-to-End Pipeline:** Simulates the complete physical layer sequence: Random Bit Generation $\rightarrow$ BPSK Modulation $\rightarrow$ TX Pulse Shaping $\rightarrow$ AWGN Channel Noise $\rightarrow$ RX Matched Filtering $\rightarrow$ Signal Downsampling $\rightarrow$ Bit Detection.
+  * **Custom Pulse Shaping:** Designed a Root-Raised Cosine (RRC) filter from scratch, carefully managing mathematical edge cases (such as center peaks and intercept points) to minimize Inter-Symbol Interference (ISI).
+  * **Empirical Verification:** Sweeps across a user-defined Signal-to-Noise Ratio (SNR) range to compute the Bit Error Rate (BER), verifying performance by plotting the results directly against the theoretical curve using `scipy.special.erfc`.
+* **Tech Stack:** Python, NumPy, SciPy, Matplotlib
+* **Status:** Actively Developed
 
 ---
 
-## Letterboxd Watchlist Comparison Tool
+### N-Body Simulation
+📂 [View Code](./n-body)
 
-<p align="center">
-  <a href="#project-overview">Project Overview</a> •
-  <a href="#high-performance-circle-packing-hpc">Circle Packing (HPC)</a> •
-  <a href="#n-body-simulation">N-Body Simulation</a> •
-  <a href="#letterboxd-watchlist-comparison-tool">Letterboxd Tool</a>
-</p>
+A physics simulation tracking gravitational interactions, orbital mechanics, and multi-body dynamics.
 
-A desktop tool for scraping multiple Letterboxd users’ watchlists and analysing films in common.
+* **Key Features:**
+  * **Core Engine:** Built a basic gravitational orbit simulation to model multi-body celestial tracking.
+  * **Collision Theory:** Designed custom fragmentation scoring logic to support future kinetic collision and merging mechanics.
+* **Tech Stack:** C++, Python, NumPy, Matplotlib, Jupyter Notebook
+* **Status:** Prototype
 
-**Features:** - Scrapes one or more users’ Letterboxd watchlists  
-- Performs TMDb API lookups for metadata, posters, and watch availability  
-- Allows filtering by selected users, runtime, and unseen status  
-- Displays detailed film information, including poster and overview  
-
-**Technical Stack:** - **Language:** Python  
-- **Libraries / Tools:** Tkinter, Pandas, Requests, BeautifulSoup, Pillow  
-
-**Configuration:** A configurable `config.json` file allows:  
-- Adding user groups  
-- API key entry  
-- Region selection for streaming information  
-- Performance tuning of scrape delays  
-
-**Status:** Actively developed  
 
 ---
 
-## Highlights & Achievements  
-- **Parallel Computing:** Successfully implemented and benchmarked MPI-based simulations for large-scale physics problems.
-- Developed early-stage multi-body orbital mechanics simulation.  
-- Created a practical application for comparing watchlists and visualising shared interests.  
-- Established structure for continued physics simulation development.  
-- Hands-on experience across numerical, graphical, and data-driven programming.
+### Letterboxd Watchlist Comparison Tool
+📂 [View Code](./letterboxd-tool)
+
+A desktop application designed to scrape and cross-reference multiple Letterboxd user watchlists to find shared film interests.
+
+* **Key Features:**
+  * **Data Aggregation:** Scrapes user watchlists via BeautifulSoup and enriches data using TMDb API lookups for metadata, artwork, and regional streaming availability.
+  * **Dynamic UI:** Developed a Tkinter interface featuring advanced filtering options (runtime, unseen status) and fluid poster rendering.
+  * **Robust Config:** Employs a robust `config.json` system to cleanly manage user groups, API keys, streaming regions, and scrape delays to prevent rate-limiting.
+* **Tech Stack:** Python, Tkinter, Pandas, Requests, BeautifulSoup, Pillow
+* **Status:** Completed
+
 
 ---
 
-## Learning Outcomes  
-Across these projects:  
-- **Distributed Computing:** Managing process communication, data synchronisation, and load balancing in parallel environments.
-- Applying numerical physics techniques to real computational simulations.  
-- Building interfaces and visualisations for scientific or media data.  
-- Improving software design practices and modular organisation.  
+## 🧠 Key Takeaways & Skills
 
----
+* **Distributed & Parallel Computing:** Experience managing process communication, data synchronization, and load balancing across multi-node HPC clusters (MPI, OpenMP).
+* **Digital Signal Processing (DSP):** Building numerical models for discrete-time systems, applying convolutions, tracking group delays, and constructing custom filter taps.
+* **Stochastic Modeling & Analysis:** Simulating statistical physical properties like AWGN channels and pseudorandom distributions (Mersenne Twister), verified against analytical mathematical models.
+* **Software Design:** Applying modular architecture, decoupled configurations (`dataclasses`, JSON), and automated visualization pipelines across both C++ and Python environments.
