@@ -2,18 +2,30 @@
 
 import numpy as np
 
-def symbol_upsample(symbols: np.ndarray, sps: int) -> np.ndarray:
+def symbol_upsample(
+    symbols: np.ndarray,
+    sps: int,
+) -> np.ndarray:
     upsampled = np.zeros(len(symbols) * sps)
     upsampled[::sps] = symbols
     return upsampled
 
-def signal_downsample(signal: np.ndarray, size: int, sps:int, span:int) -> np.ndarray:
+def signal_downsample(
+    signal: np.ndarray,
+    size: int,
+    sps: int,
+    span: int,
+) -> np.ndarray:
     group_delay_samples = span * sps
     downsampled_signal = signal[group_delay_samples : group_delay_samples + (size * sps) : sps]
     
     return downsampled_signal
 
-def raised_cosine_receiver_filter(alpha: float, sps: int, span: int) -> np.ndarray:
+def raised_cosine_receiver_filter(
+    alpha: float,
+    sps: int,
+    span: int,
+) -> np.ndarray:
     # Generates a Root-Raised Cosine (RRC) filter impulse response.
 
     num_taps = span * sps + 1 # Number of taps (samples) in filter
@@ -43,14 +55,26 @@ def raised_cosine_receiver_filter(alpha: float, sps: int, span: int) -> np.ndarr
     impulse_response /= np.sqrt(np.sum(impulse_response**2))
     return impulse_response
 
-def apply_tx_pulse_shaping(symbols: np.ndarray, alpha: float, sps: int, span: int) -> np.ndarray:
+def apply_tx_pulse_shaping(
+    symbols: np.ndarray,
+    alpha: float,
+    sps: int,
+    span: int,
+) -> np.ndarray:
+    
     upsampled_signals = symbol_upsample(symbols, sps)
     rrc_taps = raised_cosine_receiver_filter(alpha, sps, span)
     tx_signal = np.convolve(upsampled_signals, rrc_taps, mode='full')
 
     return tx_signal
 
-def apply_rx_matched_filter(noisy_signal: np.ndarray, alpha: float, sps: int, span: int) -> np.ndarray:
+def apply_rx_matched_filter(
+    noisy_signal: np.ndarray,
+    alpha: float,
+    sps: int,
+    span: int,
+) -> np.ndarray:
+    
     rrc_taps = raised_cosine_receiver_filter(alpha, sps, span)
     rx_filtered_signal = np.convolve(noisy_signal, rrc_taps, mode='full')
 

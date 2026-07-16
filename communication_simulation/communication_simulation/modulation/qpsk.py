@@ -1,4 +1,4 @@
-# modulation/bpsk.py
+# modulation/qpsk.py
 import numpy as np
 
 # ------------------------------ PRE-TRANSMISSION SETUP ------------------------------
@@ -9,7 +9,9 @@ def modulate(
 ) -> np.ndarray:
     
     symbols = (bit_array * 2) - 1
-    return symbols
+    paired_symbols = np.reshape(symbols, (-1, 2))
+
+
 
 
 # ------------------------------ POST-TRANSMISSION PROCESSING ------------------------------
@@ -18,5 +20,4 @@ def modulate(
 def demodulate(
     signal: np.ndarray,
 ) -> np.ndarray:
-    
-    return np.where(signal < 0, 0, 1)
+    pass
