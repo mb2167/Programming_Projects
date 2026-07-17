@@ -53,6 +53,7 @@ def raised_cosine_receiver_filter(
             impulse_response[i] = numerator / denominator
     
     impulse_response /= np.sqrt(np.sum(impulse_response**2))
+
     return impulse_response
 
 def apply_tx_pulse_shaping(

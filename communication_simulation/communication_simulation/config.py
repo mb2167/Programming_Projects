@@ -31,5 +31,6 @@ class SimConfig:
     SHOW_PLOT: bool = True
 
     # Carrier Wave Parameters
-    CARRIER_FREQUENCY: float = 500.0e6
-    SAMPLING_FREQUENCY: int = CARRIER_FREQUENCY * 4
+    CARRIER_FREQUENCY: float = 500.0e6  # 500 MHz
+    SAMPLES_PER_CARRIER: int = 16
+    SAMPLING_FREQUENCY: int = CARRIER_FREQUENCY * SAMPLES_PER_CARRIER

@@ -11,6 +11,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import modulation.bpsk as bpsk
 import modulation.pulse_shapes as pulse_shapes
+import modulation.qpsk as qpsk
 from metrics import BerMeasurement, calc_error
 from simulation import communication_simulation
 
@@ -24,6 +25,22 @@ class TestCommunicationSimulation(unittest.TestCase):
     ) -> None:
         bits = np.array([0, 1, 1, 0, 1])
         np.testing.assert_array_equal(bpsk.demodulate(bpsk.modulate(bits)), bits)
+
+    # Test that each bit pair uses the documented QPSK phase mapping
+    def test_qpsk_modulation_uses_expected_phase_mapping(
+        self,
+    ) -> None:
+        bits = np.array([0, 0, 0, 1, 1, 0, 1, 1])
+
+        signal = qpsk.modulate(
+            bits,
+            samples_per_carrier=2,
+            carrier_frequency=0.0,
+            sampling_frequency=1.0,
+        )
+
+        expected = np.repeat(np.sin(np.pi / 4 * np.array([1, 3, 7, 5])), 2)
+        np.testing.assert_allclose(signal, expected)
 
     # Test that the RRC filter is symmetrical and normalised to unit energy
     def test_rrc_taps_are_symmetric_and_unit_energy(
