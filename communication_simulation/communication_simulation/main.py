@@ -20,9 +20,7 @@ def main():
 
     # Iterate through the SNR range defined in config
     for eb_n0_db in cfg.snr_range:
-        measurement = communication_simulation(
-            rng, cfg.SIZE, eb_n0_db, cfg.ALPHA, cfg.SPS, cfg.FILTER_LENGTH
-        )
+        measurement = communication_simulation(rng, cfg.SIZE, eb_n0_db, cfg.ALPHA, cfg.SPS, cfg.FILTER_LENGTH, cfg.MODULATION)
         measurements.append(measurement)
         print(
             f"Eb/N0 = {eb_n0_db:>3} dB: "

@@ -2,8 +2,14 @@
 from channels import add_noise
 from metrics import BerMeasurement, calc_error
 import numpy as np
-import modulation.bpsk as bpsk
 import modulation.pulse_shapes as pulse_shapes
+import modulation.bpsk as bpsk
+import modulation.qpsk as qpsk
+
+MODULATION_SCHEMES = {
+    "bpsk": bpsk,
+    "qpsk": qpsk,
+}
 
 def communication_simulation(
     rng: np.random.Generator,
@@ -12,15 +18,27 @@ def communication_simulation(
     alpha: float,
     sps: int,
     span: int,
+    modulation: str,
+    samples_per_carrier: int = 16,
+    carrier_frequency: float = 1_000.0,
+    sampling_frequency: float = 16_000.0,
 ) -> BerMeasurement:
     
     random_bits = gen_bits(rng, size)
-    signal = bpsk.modulate(random_bits)
-    shaped_signal = pulse_shapes.apply_tx_pulse_shaping(signal, alpha, sps, span)
-    noisy_signal = add_noise(shaped_signal, eb_n0_db, rng)
-    filtered_signal = pulse_shapes.apply_rx_matched_filter(noisy_signal, alpha, sps, span)
-    downsampled_signal = pulse_shapes.signal_downsample(filtered_signal, size, sps, span)
-    received_bits = bpsk.demodulate(downsampled_signal)
+
+    match modulation:
+        case "bpsk":
+            signal = bpsk.modulate(random_bits, samples_per_carrier, carrier_frequency, sampling_frequency)
+            noisy_signal = add_noise(signal, eb_n0_db, rng)
+            received_bits = bpsk.demodulate(noisy_signal, carrier_frequency, sampling_frequency, samples_per_carrier)
+
+        case "qpsk":
+            signal = qpsk.modulate(random_bits, samples_per_carrier, carrier_frequency, sampling_frequency)
+            noisy_signal = add_noise(signal, eb_n0_db, rng)
+            received_bits = qpsk.demodulate(noisy_signal, carrier_frequency, sampling_frequency, samples_per_carrier)
+
+        case _:
+            raise ValueError(f"Unsupported modulation scheme: {modulation}")
 
     return calc_error(random_bits, received_bits)
 
@@ -33,15 +51,8 @@ def gen_bits(
 
     return rng.integers(0, 2, size=size)
 
-def gen_carrier_wave(
-    carrier_frequency: float,
-    sampling_frequency: float,
-    sampling_period: float
-    ) -> np.ndarray:
 
-    total_samples = int(sampling_period * sampling_frequency)
-    time_period = np.arange(total_samples) / sampling_frequency
-    sine_wave = np.sin(2 * np.pi * carrier_frequency * time_period)
 
-    return sine_wave
+
+
 

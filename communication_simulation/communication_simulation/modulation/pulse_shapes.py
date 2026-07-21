@@ -80,3 +80,17 @@ def apply_rx_matched_filter(
     rx_filtered_signal = np.convolve(noisy_signal, rrc_taps, mode='full')
 
     return rx_filtered_signal
+
+
+def low_pass_filter(
+        unfiltered_signal: np.ndarray,
+        samples_per_carrier: int
+) -> np.ndarray:
+    
+    # Define the averaging window size
+    window_size = samples_per_carrier // 2
+    kernel = np.ones(window_size) / window_size
+
+    filtered_signal = np.convolve(unfiltered_signal, kernel, mode='same')
+
+    return filtered_signal
