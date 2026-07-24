@@ -28,9 +28,11 @@ def communication_simulation(
 
     match modulation:
         case "bpsk":
-            signal = bpsk.modulate(random_bits, samples_per_carrier, carrier_frequency, sampling_frequency)
+            symbols = bpsk.modulate(random_bits)
+            signal = pulse_shapes.apply_tx_pulse_shaping(symbols, alpha, sps, span)
             noisy_signal = add_noise(signal, eb_n0_db, rng)
-            received_bits = bpsk.demodulate(noisy_signal, carrier_frequency, sampling_frequency, samples_per_carrier)
+            received_signal = pulse_shapes.apply_rx_pulse_shaping(noisy_signal, alpha, sps, span)
+            received_bits = bpsk.demodulate(received_signal)
 
         case "qpsk":
             signal = qpsk.modulate(random_bits, samples_per_carrier, carrier_frequency, sampling_frequency)
