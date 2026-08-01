@@ -43,14 +43,57 @@ py -3.13 -m unittest discover -s tests -v
 
 ## TODO
 
-- Fix AWGN scaling to use the actual transmitted bit energy (Eb).
-- Validate that QPSK receives an even number of bits.
-- Rename raised_cosine_receiver_filter() to rrc_filter().
-- Replace the moving-average low-pass filter with a proper matched filter.
-- Integrate the RRC pulse-shaping pipeline into the transmitter and receiver.
-- Compensate for filter group delay before symbol decisions.
-- Decouple the symbol rate from the carrier frequency.
-- Remove or implement the currently unused parameters (alpha, sps, span).
-- Refactor to reduce duplicated modulation/demodulation logic.
-- Validate simulated BER against theoretical BPSK/QPSK BER curves.
-- Test that BER is independent of oversampling and carrier settings.
+### High Priority
+
+- [ ] Fix AWGN scaling so noise power is based on the transmitted bit energy (Eb) rather than assuming unit-energy symbols.
+- [ ] Add validation that the QPSK input contains an even number of bits (or pad automatically).
+- [ ] Rename `raised_cosine_receiver_filter()` to `root_raised_cosine_filter()` or `rrc_filter()`.
+
+### Replace the Current Receiver
+
+- [ ] Replace the moving-average `low_pass_filter()` with a proper receiver implementation.
+- [ ] Decide whether to use:
+  - [ ] Integrate-and-dump receiver (simpler).
+  - [ ] Root Raised Cosine (RRC) matched filter (recommended).
+
+### Integrate Pulse Shaping
+
+- [ ] Remove the current rectangular pulse generation (`np.repeat(...)`) from the modulators.
+- [ ] Map bits to BPSK/QPSK symbols before pulse shaping.
+- [ ] Upsample the symbols.
+- [ ] Apply the transmit RRC filter.
+- [ ] Perform carrier modulation after pulse shaping.
+- [ ] At the receiver:
+  - [ ] Coherently mix down to baseband.
+  - [ ] Apply the matched RRC filter.
+  - [ ] Compensate for TX/RX filter group delay.
+  - [ ] Downsample at the correct symbol instants.
+  - [ ] Make symbol decisions.
+
+### Improve the Simulation Model
+
+- [ ] Separate the symbol rate from the carrier frequency so they are independent parameters.
+- [ ] Compute `samples_per_symbol` from the symbol rate and sampling frequency instead of tying it to one carrier cycle.
+- [ ] Verify that BER remains unchanged when changing the oversampling factor.
+
+### Clean Up the Code
+
+- [ ] Remove unused parameters (`alpha`, `sps`, `span`) until they are integrated into the pulse-shaping pipeline.
+- [ ] Remove unused imports.
+- [ ] Consider replacing the `match` statement with the `MODULATION_SCHEMES` dictionary to reduce duplicated code.
+
+### Validation
+
+- [ ] Compare the simulated BPSK BER against the theoretical BER curve.
+- [ ] Compare the simulated Gray-coded QPSK BER against the theoretical BER curve.
+- [ ] Verify that changing the carrier frequency, sampling frequency, samples per symbol, or RRC roll-off factor does not unexpectedly shift the BER curve.
+
+### Optional Extensions
+
+- [ ] Add carrier phase offset.
+- [ ] Add carrier frequency offset.
+- [ ] Add symbol timing offset.
+- [ ] Add Rayleigh and Rician fading channels.
+- [ ] Add higher-order modulation schemes (e.g. 16-QAM, 64-QAM).
+- [ ] Add eye diagram and constellation plotting.
+- [ ] Add unit tests for modulation, demodulation, and BER performance.
