@@ -39,3 +39,18 @@ Run the built-in test suite with:
 ```powershell
 py -3.13 -m unittest discover -s tests -v
 ```
+
+
+## TODO
+
+- Fix AWGN scaling to use the actual transmitted bit energy (Eb).
+- Validate that QPSK receives an even number of bits.
+- Rename raised_cosine_receiver_filter() to rrc_filter().
+- Replace the moving-average low-pass filter with a proper matched filter.
+- Integrate the RRC pulse-shaping pipeline into the transmitter and receiver.
+- Compensate for filter group delay before symbol decisions.
+- Decouple the symbol rate from the carrier frequency.
+- Remove or implement the currently unused parameters (alpha, sps, span).
+- Refactor to reduce duplicated modulation/demodulation logic.
+- Validate simulated BER against theoretical BPSK/QPSK BER curves.
+- Test that BER is independent of oversampling and carrier settings.
