@@ -5,7 +5,7 @@ from pathlib import Path
 
 import numpy as np
 
-from metrics import BerMeasurement
+from .metrics import BerMeasurement
 
 
 def save_ber_results(
@@ -43,3 +43,4 @@ def save_ber_results(
                     ),
                 }
             )
+

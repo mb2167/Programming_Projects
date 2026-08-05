@@ -38,3 +38,4 @@ def calc_error(
 
     bit_errors = int(np.count_nonzero(sent_bits != received_bits))
     return BerMeasurement(bit_errors=bit_errors, total_bits=sent_bits.size)
+

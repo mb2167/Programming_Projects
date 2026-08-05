@@ -40,6 +40,21 @@ Run the built-in test suite with:
 py -3.13 -m unittest discover -s tests -v
 ```
 
+## Modular API (additive)
+
+The original modules remain available unchanged for existing scripts. New work
+can use the `commsim/` package, whose components are separated into modems,
+channels, hardware stages, simulation orchestration, reporting, and plotting.
+It provides an additive route for hardware models without changing the legacy
+interfaces:
+
+`bits -> modem -> TX hardware -> channel -> RX hardware -> decision -> BER`
+
+Implement `HardwareModel.process(samples, context)` and attach it using
+`HardwareChain` to model components such as DACs, ADCs, amplifiers, phase
+noise, quantisation, or frequency offsets. Run its default experiment with
+`py -3.13 -m commsim`.
+
 
 ## TODO
 

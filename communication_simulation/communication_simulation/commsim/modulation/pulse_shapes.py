@@ -6,7 +6,9 @@ def symbol_upsample(
     symbols: np.ndarray,
     sps: int,
 ) -> np.ndarray:
-    upsampled = np.zeros(len(symbols) * sps)
+    if sps <= 0:
+        raise ValueError("sps must be positive.")
+    upsampled = np.zeros(len(symbols) * sps, dtype=symbols.dtype)
     upsampled[::sps] = symbols
     return upsampled
 
@@ -26,11 +28,19 @@ def raised_cosine_receiver_filter(
     sps: int,
     span: int,
 ) -> np.ndarray:
-    # Generates a Root-Raised Cosine (RRC) filter impulse response.
+    """Generate unit-energy root-raised-cosine (RRC) filter taps."""
+    if not 0 <= alpha <= 1:
+        raise ValueError("alpha must be between 0 and 1.")
+    if sps <= 0 or span <= 0:
+        raise ValueError("sps and span must be positive.")
 
     num_taps = span * sps + 1 # Number of taps (samples) in filter
     time_index_array = np.linspace(-span/2, span/2, num_taps)
     impulse_response = np.zeros(num_taps)
+
+    if alpha == 0:
+        impulse_response = np.sinc(time_index_array)
+        return impulse_response / np.sqrt(np.sum(impulse_response**2))
 
     # Case C constants calculations
     term1 = (1.0 + 2.0 / np.pi) * np.sin(np.pi / (4.0 * alpha))
@@ -38,7 +48,7 @@ def raised_cosine_receiver_filter(
     case_c_constant = (alpha / np.sqrt(2.0)) * (term1 + term2)
     
     for i, t in enumerate(time_index_array):
-        if t == 0.0:
+        if np.isclose(t, 0.0):
             # --- CASE B: The Center Peak ---
             impulse_response[i] = 1.0 - alpha + (4 * alpha / np.pi)
         

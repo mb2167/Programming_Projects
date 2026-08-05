@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import erfc
-from metrics import BerMeasurement
+from .metrics import BerMeasurement
 from pathlib import Path
 
 # ------------------------------ UTILITIES / DEBUGGING ------------------------------
@@ -74,3 +74,4 @@ def plot_snr_v_ber(
     if show:
         plt.show()
     plt.close()
+

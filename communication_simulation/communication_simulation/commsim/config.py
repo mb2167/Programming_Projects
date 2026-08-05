@@ -6,7 +6,7 @@ import numpy as np
 @dataclass(frozen=True)
 class SimConfig:
     # Simulation Parameters
-    MODULATION: str = "qpsk"
+    MODULATION: str = "bpsk"
     SIZE: int = 1000000
     SEED: int = 2
     
@@ -35,3 +35,4 @@ class SimConfig:
     CARRIER_FREQUENCY: float = 500.0e6  # 500 MHz
     SAMPLES_PER_CARRIER: int = 8
     SAMPLING_FREQUENCY: int = CARRIER_FREQUENCY * SAMPLES_PER_CARRIER
+

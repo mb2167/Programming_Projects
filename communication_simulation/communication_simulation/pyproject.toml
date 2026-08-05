@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "communication-simulation"
+version = "0.1.0"
+description = "Composable digital communications simulation toolkit"
+requires-python = ">=3.10"
+dependencies = ["numpy", "scipy", "matplotlib"]
+
+[project.scripts]
+commsim = "commsim.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["commsim*"]

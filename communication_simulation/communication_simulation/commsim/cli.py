@@ -1,10 +1,21 @@
 # main.py
 import numpy as np
 
-from config import SimConfig
-from reporting import save_ber_results
-from simulation import communication_simulation
-from plotting import plot_snr_v_ber
+# Support both ``python -m commsim`` and VS Code's "Run Python File" action.
+if __package__ in (None, ""):
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from commsim.config import SimConfig
+    from commsim.plotting import plot_snr_v_ber
+    from commsim.reporting import save_ber_results
+    from commsim.simulation import communication_simulation
+else:
+    from .config import SimConfig
+    from .plotting import plot_snr_v_ber
+    from .reporting import save_ber_results
+    from .simulation import communication_simulation
 
 
 # ------------------------------ MAIN ------------------------------
