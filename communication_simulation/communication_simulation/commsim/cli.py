@@ -17,7 +17,6 @@ else:
     from .reporting import save_ber_results
     from .simulation import communication_simulation
 
-
 # ------------------------------ MAIN ------------------------------
 
 def main():
@@ -31,7 +30,17 @@ def main():
 
     # Iterate through the SNR range defined in config
     for eb_n0_db in cfg.snr_range:
-        measurement = communication_simulation(rng, cfg.SIZE, eb_n0_db, cfg.ALPHA, cfg.SPS, cfg.FILTER_LENGTH, cfg.MODULATION)
+        measurement = communication_simulation(
+            rng,
+            cfg.SIZE,
+            eb_n0_db,
+            cfg.ALPHA,
+            cfg.SPS,
+            cfg.FILTER_LENGTH,
+            cfg.MODULATION,
+            sample_rate_hz=cfg.SAMPLING_FREQUENCY,
+            carrier_frequency_hz=cfg.CARRIER_FREQUENCY,
+        )
         measurements.append(measurement)
         print(
             f"Eb/N0 = {eb_n0_db:>3} dB: "
@@ -45,7 +54,6 @@ def main():
     plot_snr_v_ber(cfg.snr_range, measurements, figure_path, cfg.SHOW_PLOT)
     print(f"Saved results to {csv_path}")
     print(f"Saved figure to {figure_path}")
-
 
 if __name__ == "__main__":
     main()

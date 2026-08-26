@@ -6,7 +6,7 @@ import numpy as np
 @dataclass(frozen=True)
 class SimConfig:
     # Simulation Parameters
-    MODULATION: str = "bpsk"
+    MODULATION: str = "qpsk"
     SIZE: int = 1000000
     SEED: int = 2
     

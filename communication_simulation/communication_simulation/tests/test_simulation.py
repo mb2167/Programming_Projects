@@ -14,6 +14,15 @@ import commsim.modulation.pulse_shapes as pulse_shapes
 import commsim.modulation.qpsk as qpsk
 from commsim.metrics import BerMeasurement, calc_error
 from commsim.simulation import communication_simulation
+from commsim.hardware import ReceiverHardwareChain, TransmitterHardwareChain
+from commsim.modulation import (
+    BPSKDemodulator,
+    BPSKModulator,
+    DemodulationChain,
+    DemodulationContext,
+    ModulationChain,
+    ModulationContext,
+)
 
 
 # ------------------------------ TESTS ------------------------------
@@ -99,6 +108,45 @@ class TestCommunicationSimulation(unittest.TestCase):
             np.random.default_rng(3), 100_000, 0.0, 0.35, 8, 8, "qpsk"
         )
         self.assertAlmostEqual(result.ber, 0.07865, delta=0.01)
+
+    # Test that modulation and demodulation chains use their configured stages.
+    def test_modulation_and_demodulation_chains(self) -> None:
+        bits = np.array([0, 1, 1, 0])
+        modulation_chain = ModulationChain((BPSKModulator(),))
+        signal = modulation_chain.process(bits, ModulationContext(alpha=0.35, sps=8, span=8))
+        demodulation_chain = DemodulationChain((BPSKDemodulator(),))
+        received_bits = demodulation_chain.process(
+            signal,
+            DemodulationContext(symbol_count=bits.size, alpha=0.35, sps=8, span=8),
+        )
+        np.testing.assert_array_equal(received_bits, bits)
+
+    # Test that separate transmit and receive hardware stages run in order.
+    def test_transmit_and_receive_hardware_chains_are_separate(self) -> None:
+        calls: list[str] = []
+
+        class RecordTransmitter:
+            def process(self, samples: np.ndarray, context: object) -> np.ndarray:
+                calls.append("transmitter")
+                return samples
+
+        class RecordReceiver:
+            def process(self, samples: np.ndarray, context: object) -> np.ndarray:
+                calls.append("receiver")
+                return samples
+
+        communication_simulation(
+            np.random.default_rng(12),
+            100,
+            100.0,
+            0.35,
+            8,
+            8,
+            "bpsk",
+            transmitter_hardware=TransmitterHardwareChain((RecordTransmitter(),)),
+            receiver_hardware=ReceiverHardwareChain((RecordReceiver(),)),
+        )
+        self.assertEqual(calls, ["transmitter", "receiver"])
 
     # Test that a zero-error result has an upper bound for logarithmic plotting
     def test_zero_error_measurement_has_upper_bound(

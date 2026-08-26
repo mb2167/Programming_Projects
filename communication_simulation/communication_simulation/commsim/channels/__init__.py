@@ -1,5 +1,13 @@
 """Propagation-channel models."""
 
-from .awgn import add_AWGN_noise, add_noise
+from .awgn import AWGN
+from .base import ChannelContext, ChannelModel
+from .chain import ChannelChain, IdentityChannel
 
-__all__ = ["add_AWGN_noise", "add_noise"]
+__all__ = [
+    "AWGN",
+    "ChannelChain",
+    "ChannelContext",
+    "ChannelModel",
+    "IdentityChannel",
+]

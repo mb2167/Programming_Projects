@@ -21,7 +21,6 @@ def plot_signal(
     plt.ylabel("Amplitude")
     plt.show()
 
-
 # Plot SNR against BER and overlay theoretical performance
 def plot_snr_v_ber(
     eb_n0_db_values: np.ndarray,
@@ -74,4 +73,3 @@ def plot_snr_v_ber(
     if show:
         plt.show()
     plt.close()
-

@@ -25,3 +25,13 @@ class HardwareChain:
         for stage in self.stages:
             samples = stage.process(samples, context)
         return samples
+
+
+@dataclass(frozen=True)
+class TransmitterHardwareChain(HardwareChain):
+    """Runs hardware stages that affect the waveform before the channel."""
+
+
+@dataclass(frozen=True)
+class ReceiverHardwareChain(HardwareChain):
+    """Runs hardware stages that affect the waveform after the channel."""

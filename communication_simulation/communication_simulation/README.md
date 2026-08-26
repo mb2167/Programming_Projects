@@ -55,35 +55,34 @@ Implement `HardwareModel.process(samples, context)` and attach it using
 noise, quantisation, or frequency offsets. Run its default experiment with
 `py -3.13 -m commsim`.
 
-
 ## TODO
 
 ### High Priority
 
-- [ ] Fix AWGN scaling so noise power is based on the transmitted bit energy (Eb) rather than assuming unit-energy symbols.
-- [ ] Add validation that the QPSK input contains an even number of bits (or pad automatically).
-- [ ] Rename `raised_cosine_receiver_filter()` to `root_raised_cosine_filter()` or `rrc_filter()`.
+- [x] Fix AWGN scaling so noise power is based on transmitted bit energy (Eb) for unit-energy BPSK and QPSK symbols.
+- [x] Add validation that the QPSK input contains an even number of bits.
+- [x] Rename `raised_cosine_receiver_filter()` to `root_raised_cosine_filter()` or `rrc_filter()`.
 
 ### Replace the Current Receiver
 
-- [ ] Replace the moving-average `low_pass_filter()` with a proper receiver implementation.
+- [x] Replace the moving-average `low_pass_filter()` with a proper receiver implementation.
 - [ ] Decide whether to use:
   - [ ] Integrate-and-dump receiver (simpler).
-  - [ ] Root Raised Cosine (RRC) matched filter (recommended).
+  - [x] Root Raised Cosine (RRC) matched filter (recommended).
 
 ### Integrate Pulse Shaping
 
-- [ ] Remove the current rectangular pulse generation (`np.repeat(...)`) from the modulators.
-- [ ] Map bits to BPSK/QPSK symbols before pulse shaping.
-- [ ] Upsample the symbols.
-- [ ] Apply the transmit RRC filter.
+- [x] Remove the current rectangular pulse generation (`np.repeat(...)`) from the modulators.
+- [x] Map bits to BPSK/QPSK symbols before pulse shaping.
+- [x] Upsample the symbols.
+- [x] Apply the transmit RRC filter.
 - [ ] Perform carrier modulation after pulse shaping.
 - [ ] At the receiver:
   - [ ] Coherently mix down to baseband.
-  - [ ] Apply the matched RRC filter.
-  - [ ] Compensate for TX/RX filter group delay.
-  - [ ] Downsample at the correct symbol instants.
-  - [ ] Make symbol decisions.
+  - [x] Apply the matched RRC filter.
+  - [x] Compensate for TX/RX filter group delay.
+  - [x] Downsample at the correct symbol instants.
+  - [x] Make symbol decisions.
 
 ### Improve the Simulation Model
 
@@ -93,14 +92,14 @@ noise, quantisation, or frequency offsets. Run its default experiment with
 
 ### Clean Up the Code
 
-- [ ] Remove unused parameters (`alpha`, `sps`, `span`) until they are integrated into the pulse-shaping pipeline.
+- [x] Integrate `alpha`, `sps`, and `span` into the pulse-shaping pipeline.
 - [ ] Remove unused imports.
 - [ ] Consider replacing the `match` statement with the `MODULATION_SCHEMES` dictionary to reduce duplicated code.
 
 ### Validation
 
-- [ ] Compare the simulated BPSK BER against the theoretical BER curve.
-- [ ] Compare the simulated Gray-coded QPSK BER against the theoretical BER curve.
+- [x] Compare the simulated BPSK BER against the theoretical BER curve.
+- [x] Compare the simulated Gray-coded QPSK BER against the theoretical BER curve.
 - [ ] Verify that changing the carrier frequency, sampling frequency, samples per symbol, or RRC roll-off factor does not unexpectedly shift the BER curve.
 
 ### Optional Extensions
@@ -111,4 +110,4 @@ noise, quantisation, or frequency offsets. Run its default experiment with
 - [ ] Add Rayleigh and Rician fading channels.
 - [ ] Add higher-order modulation schemes (e.g. 16-QAM, 64-QAM).
 - [ ] Add eye diagram and constellation plotting.
-- [ ] Add unit tests for modulation, demodulation, and BER performance.
+- [x] Add unit tests for modulation, demodulation, and BER performance.
