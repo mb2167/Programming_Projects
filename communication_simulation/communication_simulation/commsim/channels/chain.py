@@ -1,3 +1,4 @@
+# channels/chain.py
 """Composition of propagation-channel stages."""
 
 from dataclasses import dataclass, field

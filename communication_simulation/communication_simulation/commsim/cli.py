@@ -25,7 +25,7 @@ def main():
 
     # Instantiate the RNG once here using the config seed
     rng = np.random.default_rng(cfg.SEED)
-    
+
     measurements = []
 
     # Iterate through the SNR range defined in config
@@ -35,7 +35,7 @@ def main():
             cfg.SIZE,
             eb_n0_db,
             cfg.ALPHA,
-            cfg.SPS,
+            cfg.SAMPLES_PER_SYMBOL,
             cfg.FILTER_LENGTH,
             cfg.MODULATION,
             sample_rate_hz=cfg.SAMPLING_FREQUENCY,
@@ -48,10 +48,16 @@ def main():
             f"(BER = {measurement.ber:.3e})"
         )
 
-    csv_path = cfg.OUTPUT_DIR / "bpsk_ber_results.csv"
-    figure_path = cfg.OUTPUT_DIR / "bpsk_ber.png"
+    csv_path = cfg.OUTPUT_DIR / f"{cfg.MODULATION}_ber_results.csv"
+    figure_path = cfg.OUTPUT_DIR / f"{cfg.MODULATION}_ber.png"
     save_ber_results(csv_path, cfg.snr_range, measurements)
-    plot_snr_v_ber(cfg.snr_range, measurements, figure_path, cfg.SHOW_PLOT)
+    plot_snr_v_ber(
+        cfg.snr_range,
+        measurements,
+        output_path=figure_path,
+        show=cfg.SHOW_PLOT,
+        modulation=cfg.MODULATION,
+    )
     print(f"Saved results to {csv_path}")
     print(f"Saved figure to {figure_path}")
 

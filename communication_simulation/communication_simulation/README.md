@@ -86,15 +86,15 @@ noise, quantisation, or frequency offsets. Run its default experiment with
 
 ### Improve the Simulation Model
 
-- [ ] Separate the symbol rate from the carrier frequency so they are independent parameters.
-- [ ] Compute `samples_per_symbol` from the symbol rate and sampling frequency instead of tying it to one carrier cycle.
+- [x] Separate the symbol rate from the carrier frequency so they are independent parameters.
+- [x] Compute `samples_per_symbol` from the symbol rate and sampling frequency instead of tying it to one carrier cycle.
 - [ ] Verify that BER remains unchanged when changing the oversampling factor.
 
 ### Clean Up the Code
 
 - [x] Integrate `alpha`, `sps`, and `span` into the pulse-shaping pipeline.
 - [ ] Remove unused imports.
-- [ ] Consider replacing the `match` statement with the `MODULATION_SCHEMES` dictionary to reduce duplicated code.
+- [x] Replace the `match` statement with the `MODULATION_SCHEMES` dictionary to reduce duplicated code.
 
 ### Validation
 
@@ -111,3 +111,7 @@ noise, quantisation, or frequency offsets. Run its default experiment with
 - [ ] Add higher-order modulation schemes (e.g. 16-QAM, 64-QAM).
 - [ ] Add eye diagram and constellation plotting.
 - [x] Add unit tests for modulation, demodulation, and BER performance.
+
+### Notes
+
+- Add unique oscillator (phase and frequency) for both TX and RX. Calculate phase and freq offset from that. Following this, create a synchronisation function

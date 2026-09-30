@@ -1,3 +1,4 @@
+# simulation.py
 """Simulation orchestration."""
 
 import numpy as np
@@ -16,17 +17,19 @@ from .modulation import (
     QPSKModulator,
 )
 
+bpsk_bits_per_symbol = 1
+qpsk_bits_per_symbol = 2
 
 MODULATION_SCHEMES = {
     "bpsk": (
         ModulationChain((BPSKModulator(),)),
         DemodulationChain((BPSKDemodulator(),)),
-        1,
+        bpsk_bits_per_symbol,
     ),
     "qpsk": (
         ModulationChain((QPSKModulator(),)),
         DemodulationChain((QPSKDemodulator(),)),
-        2,
+        qpsk_bits_per_symbol,
     ),
 }
 DEFAULT_TRANSMITTER_HARDWARE = TransmitterHardwareChain()
@@ -51,6 +54,8 @@ def communication_simulation(
 
     random_bits = gen_bits(rng, size)
 
+    transmitter_hardware = transmitter_hardware or DEFAULT_TRANSMITTER_HARDWARE
+    receiver_hardware = receiver_hardware or DEFAULT_RECEIVER_HARDWARE
     try:
         modulation_chain, demodulation_chain, bits_per_symbol = MODULATION_SCHEMES[modulation]
 
@@ -60,14 +65,12 @@ def communication_simulation(
     if size % bits_per_symbol:
         raise ValueError(f"{modulation.upper()} requires a bit count divisible by {bits_per_symbol}.")
 
+    # Configure AWGN for this Eb/N0 sweep point and modulation order.
+    channel_chain = ChannelChain((AWGN(eb_n0_db, bits_per_symbol),))
     hardware_context = SignalContext(sample_rate_hz, carrier_frequency_hz, rng)
     channel_context = ChannelContext(sample_rate_hz, carrier_frequency_hz, rng)
     modulation_context = ModulationContext(alpha, sps, span)
     demodulation_context = DemodulationContext(size // bits_per_symbol, alpha, sps, span)
-
-    transmitter_hardware = transmitter_hardware or DEFAULT_TRANSMITTER_HARDWARE
-    receiver_hardware = receiver_hardware or DEFAULT_RECEIVER_HARDWARE
-    channel_chain = ChannelChain((AWGN(eb_n0_db, bits_per_symbol),))
 
     signal = modulation_chain.process(random_bits, modulation_context)
     transmitted_signal = transmitter_hardware.process(signal, hardware_context)
@@ -76,7 +79,6 @@ def communication_simulation(
     received_bits = demodulation_chain.process(received_signal, demodulation_context)
 
     return calc_error(random_bits, received_bits)
-
 
 # Generate binary data using the supplied random-number generator.
 def gen_bits(rng: np.random.Generator, size: int) -> np.ndarray:

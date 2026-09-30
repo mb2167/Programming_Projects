@@ -1,3 +1,4 @@
+# modulation/chain.py
 """Composition of modulation and demodulation stages."""
 
 from dataclasses import dataclass, field

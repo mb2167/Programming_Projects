@@ -1,3 +1,4 @@
+# reporting.py
 """Persistent output for reproducible simulation experiments."""
 
 import csv

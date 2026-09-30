@@ -78,7 +78,7 @@ class TestCommunicationSimulation(unittest.TestCase):
         self,
     ) -> None:
         
-        taps = pulse_shapes.raised_cosine_receiver_filter(alpha=0.35, sps=8, span=8)
+        taps = pulse_shapes.rrc_filter(alpha=0.35, sps=8, span=8)
         np.testing.assert_allclose(taps, taps[::-1])
         self.assertAlmostEqual(float(np.sum(taps**2)), 1.0)
 

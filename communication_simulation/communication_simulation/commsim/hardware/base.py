@@ -1,3 +1,4 @@
+# hardware/base.py
 """Interface for DAC, PA, oscillator, ADC, and other hardware models."""
 
 from dataclasses import dataclass

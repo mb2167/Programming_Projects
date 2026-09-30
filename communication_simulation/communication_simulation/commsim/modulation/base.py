@@ -1,3 +1,4 @@
+# modulation/base.py
 """Interfaces shared by modulation and demodulation stages."""
 
 from dataclasses import dataclass

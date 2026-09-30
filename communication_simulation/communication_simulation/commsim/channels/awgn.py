@@ -1,9 +1,7 @@
-# channel/awgn.py
-
-from dataclasses import dataclass
-
+# channels/awgn.py
 import numpy as np
 
+from dataclasses import dataclass
 from .base import ChannelContext
 
 

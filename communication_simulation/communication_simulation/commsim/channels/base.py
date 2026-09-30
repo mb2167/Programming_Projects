@@ -1,4 +1,4 @@
-# channel/base.py
+# channels/base.py
 
 from dataclasses import dataclass
 

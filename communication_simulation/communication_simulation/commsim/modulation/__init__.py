@@ -10,6 +10,7 @@ from .base import (
 from .bpsk import BPSKDemodulator, BPSKModulator
 from .chain import DemodulationChain, ModulationChain
 from .qpsk import QPSKDemodulator, QPSKModulator
+from .receiver import CostasLoop
 
 __all__ = [
     "BPSKDemodulator",
@@ -22,6 +23,7 @@ __all__ = [
     "ModulationModel",
     "QPSKDemodulator",
     "QPSKModulator",
+    "CostasLoop",
     "bpsk",
     "pulse_shapes",
     "qpsk",

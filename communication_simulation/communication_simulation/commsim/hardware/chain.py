@@ -1,3 +1,4 @@
+# hardware/chain.py
 """Hardware-stage composition."""
 
 from dataclasses import dataclass, field

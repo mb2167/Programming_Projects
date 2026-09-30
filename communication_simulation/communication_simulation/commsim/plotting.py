@@ -5,6 +5,12 @@ from scipy.special import erfc
 from .metrics import BerMeasurement
 from pathlib import Path
 
+
+THEORETICAL_BER = {
+    "bpsk": lambda eb_n0: 0.5 * erfc(np.sqrt(eb_n0)),
+    "qpsk": lambda eb_n0: 0.5 * erfc(np.sqrt(eb_n0)),
+}
+
 # ------------------------------ UTILITIES / DEBUGGING ------------------------------
 
 # Visualise the noisy signal
@@ -27,8 +33,15 @@ def plot_snr_v_ber(
     measurements: list[BerMeasurement],
     output_path: Path | None = None,
     show: bool = True,
+    modulation: str = "bpsk",
 ) -> None:
-    
+    modulation_name = modulation.upper()
+    try:
+        theoretical_ber_fn = THEORETICAL_BER[modulation.lower()]
+    except KeyError as error:
+        supported = ", ".join(THEORETICAL_BER)
+        raise ValueError(f"Unsupported modulation '{modulation}'. Expected: {supported}.") from error
+
     snr_array = np.asarray(eb_n0_db_values)
     ber_array = np.array([measurement.ber for measurement in measurements])
     zero_error_mask = ber_array == 0
@@ -42,14 +55,13 @@ def plot_snr_v_ber(
         for measurement in measurements
     ])
 
-    # Calculate Theoretical BER: 0.5 * erfc(sqrt(Eb/N0))
     snr_linear = 10 ** (snr_array / 10)
-    theoretical_ber = 0.5 * erfc(np.sqrt(snr_linear))
+    theoretical_ber = theoretical_ber_fn(snr_linear)
 
     plt.figure(figsize=(8, 5))
 
     # Plot simulated results
-    plt.semilogy(snr_array, plot_ber, 'o-', label='Simulated BPSK')
+    plt.semilogy(snr_array, plot_ber, 'o-', label=f'Simulated {modulation_name}')
     if np.any(zero_error_mask):
         plt.semilogy(
             snr_array[zero_error_mask],
@@ -59,11 +71,11 @@ def plot_snr_v_ber(
         )
 
     # Plot theoretical curve
-    plt.semilogy(snr_array, theoretical_ber, 'r--', label='Theoretical BPSK')
+    plt.semilogy(snr_array, theoretical_ber, 'r--', label=f'Theoretical {modulation_name}')
 
     plt.xlabel("$E_b/N_0$ (dB)")
     plt.ylabel("Bit Error Rate (BER)")
-    plt.title("BER Performance of BPSK over AWGN Channel")
+    plt.title(f"BER Performance of {modulation_name} over AWGN Channel")
     plt.grid(True, which="both", linestyle=":", alpha=0.5)
     plt.legend()
     plt.tight_layout()

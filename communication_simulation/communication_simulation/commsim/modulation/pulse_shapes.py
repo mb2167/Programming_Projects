@@ -23,7 +23,7 @@ def signal_downsample(
     
     return downsampled_signal
 
-def raised_cosine_receiver_filter(
+def rrc_filter(
     alpha: float,
     sps: int,
     span: int,
@@ -74,7 +74,7 @@ def apply_tx_pulse_shaping(
 ) -> np.ndarray:
     
     upsampled_signals = symbol_upsample(symbols, sps)
-    rrc_taps = raised_cosine_receiver_filter(alpha, sps, span)
+    rrc_taps = rrc_filter(alpha, sps, span)
     tx_signal = np.convolve(upsampled_signals, rrc_taps, mode='full')
 
     return tx_signal
@@ -86,11 +86,10 @@ def apply_rx_matched_filter(
     span: int,
 ) -> np.ndarray:
     
-    rrc_taps = raised_cosine_receiver_filter(alpha, sps, span)
+    rrc_taps = rrc_filter(alpha, sps, span)
     rx_filtered_signal = np.convolve(noisy_signal, rrc_taps, mode='full')
 
     return rx_filtered_signal
-
 
 def low_pass_filter(
         unfiltered_signal: np.ndarray,
